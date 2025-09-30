@@ -1,0 +1,237 @@
+/* Quantum-Safe Blockchain Guardrail Dashboard Styles */
+
+.App {
+  text-align: left;
+}
+
+.ant-layout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ant-statistic-title {
+  font-size: 12px;
+  color: #666;
+}
+
+.ant-statistic-content {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.ant-table-tbody > tr > td {
+  padding: 8px 12px;
+}
+
+.ant-card-head-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ant-tag {
+  font-size: 11px;
+  padding: 2px 6px;
+}
+
+.ant-btn-sm {
+  font-size: 11px;
+  height: 24px;
+  padding: 0 8px;
+}
+
+/* Custom styles for transaction table */
+.transaction-hash {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  color: #1890ff;
+  cursor: pointer;
+}
+
+.transaction-hash:hover {
+  text-decoration: underline;
+}
+
+/* Status indicators */
+.status-pending {
+  color: #fa8c16;
+}
+
+.status-confirmed {
+  color: #52c41a;
+}
+
+.status-upgraded {
+  color: #1890ff;
+}
+
+/* Connection status */
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.connection-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #52c41a;
+  animation: pulse 2s infinite;
+}
+
+.connection-indicator.disconnected {
+  background-color: #ff4d4f;
+  animation: none;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .ant-layout-sider {
+    width: 200px !important;
+    min-width: 200px !important;
+    max-width: 200px !important;
+  }
+  
+  .ant-table-tbody > tr > td {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  
+  .ant-statistic-content {
+    font-size: 14px;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Loading states */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Alert customizations */
+.ant-alert {
+  border-radius: 6px;
+}
+
+.ant-alert-info {
+  background-color: #e6f7ff;
+  border-color: #91d5ff;
+}
+
+.ant-alert-success {
+  background-color: #f6ffed;
+  border-color: #b7eb8f;
+}
+
+/* Card customizations */
+.ant-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Button customizations */
+.ant-btn-primary {
+  background-color: #1890ff;
+  border-color: #1890ff;
+}
+
+.ant-btn-primary:hover {
+  background-color: #40a9ff;
+  border-color: #40a9ff;
+}
+
+/* Table customizations */
+.ant-table-thead > tr > th {
+  background-color: #fafafa;
+  font-weight: 600;
+  font-size: 12px;
+  color: #262626;
+}
+
+.ant-table-tbody > tr:hover > td {
+  background-color: #f5f5f5;
+}
+
+/* Progress circle customizations */
+.ant-progress-circle .ant-progress-text {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Tag customizations */
+.ant-tag {
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* Space component customizations */
+.ant-space-vertical {
+  width: 100%;
+}
+
+.ant-space-vertical > .ant-space-item {
+  width: 100%;
+}
+
+/* Layout customizations */
+.ant-layout-sider {
+  background: #fafafa;
+  border-right: 1px solid #f0f0f0;
+}
+
+.ant-layout-content {
+  background: #ffffff;
+}
+
+/* Header customizations */
+.ant-layout-header {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}

@@ -1,0 +1,38 @@
+# Azure Container Instances deployment for Quantum-Safe Blockchain Guardrail
+apiVersion: 2021-07-01
+location: eastus
+name: quantum-safe-guardrail
+properties:
+  containers:
+  - name: guardrail
+    properties:
+      image: quantum-safe-guardrail:latest
+      ports:
+      - port: 3000
+        protocol: TCP
+      - port: 5000
+        protocol: TCP
+      environmentVariables:
+      - name: NODE_ENV
+        value: production
+      - name: RPC_URL
+        secureValue: ${RPC_URL}
+      - name: WS_URL
+        secureValue: ${WS_URL}
+      resources:
+        requests:
+          cpu: 1.0
+          memoryInGb: 2.0
+  osType: Linux
+  restartPolicy: Always
+  ipAddress:
+    type: Public
+    ports:
+    - protocol: TCP
+      port: 3000
+    - protocol: TCP
+      port: 5000
+    dnsNameLabel: quantum-safe-guardrail
+tags:
+  environment: production
+  application: quantum-safe-blockchain

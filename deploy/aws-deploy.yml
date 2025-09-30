@@ -1,0 +1,33 @@
+# AWS ECS Task Definition for Quantum-Safe Blockchain Guardrail
+version: '3.8'
+
+services:
+  quantum-safe-guardrail:
+    image: quantum-safe-guardrail:latest
+    ports:
+      - "3000:3000"
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - RPC_URL=${RPC_URL}
+      - WS_URL=${WS_URL}
+    volumes:
+      - guardrail-logs:/app/logs
+      - guardrail-data:/app/data
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+
+volumes:
+  guardrail-logs:
+  guardrail-data:

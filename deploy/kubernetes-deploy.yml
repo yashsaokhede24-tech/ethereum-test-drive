@@ -1,0 +1,115 @@
+# Kubernetes deployment for Quantum-Safe Blockchain Guardrail
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quantum-safe-guardrail
+  labels:
+    app: quantum-safe-guardrail
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: quantum-safe-guardrail
+  template:
+    metadata:
+      labels:
+        app: quantum-safe-guardrail
+    spec:
+      containers:
+      - name: guardrail
+        image: quantum-safe-guardrail:latest
+        ports:
+        - containerPort: 3000
+        - containerPort: 5000
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: RPC_URL
+          valueFrom:
+            secretKeyRef:
+              name: guardrail-secrets
+              key: rpc-url
+        - name: WS_URL
+          valueFrom:
+            secretKeyRef:
+              name: guardrail-secrets
+              key: ws-url
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+        - name: logs
+          mountPath: /app/logs
+        - name: data
+          mountPath: /app/data
+      volumes:
+      - name: logs
+        persistentVolumeClaim:
+          claimName: guardrail-logs-pvc
+      - name: data
+        persistentVolumeClaim:
+          claimName: guardrail-data-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quantum-safe-guardrail-service
+spec:
+  selector:
+    app: quantum-safe-guardrail
+  ports:
+  - name: web
+    port: 3000
+    targetPort: 3000
+  - name: api
+    port: 5000
+    targetPort: 5000
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: guardrail-secrets
+type: Opaque
+data:
+  rpc-url: <base64-encoded-rpc-url>
+  ws-url: <base64-encoded-ws-url>
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: guardrail-logs-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: guardrail-data-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
